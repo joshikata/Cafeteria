@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplicación</title>
+</head>
+<body>
+    <nav>
+        {% if user.is_authenticated %}
+            <p>Usuario: {{ user.username }}</p>
+            <p>
+                Rol:
+                {% if user.is_staff %}
+                    Encargado
+                {% else %}
+                    Cliente
+                {% endif %}
+            </p>
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+        {% else %}
+            <a href="{% url 'login' %}">Iniciar sesión</a>
+        {% endif %}
+    </nav>
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
