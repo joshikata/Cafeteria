@@ -1,28 +1,536 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Aplicación</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cafetería INACAP</title>
+
+    <style>
+        :root {
+            --rojo: #c8102e;
+            --rojo-oscuro: #a10d25;
+            --fondo: #f6f7fb;
+            --texto: #202536;
+            --gris: #687083;
+            --borde: #e5e7ee;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        button, .boton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 10px;
+            background: var(--rojo);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        button:hover, .boton:hover {
+            background: var(--rojo-oscuro);
+        }
+
+        button:disabled {
+            background: #eef0f4;
+            color: #737b8c;
+            cursor: not-allowed;
+        }
+
+        :focus-visible {
+            outline: 3px solid #e88a9b;
+            outline-offset: 3px;
+        }
+
+        .barra {
+            background: white;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .barra-contenido {
+            max-width: 1150px;
+            margin: auto;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .marca {
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -.6px;
+        }
+
+        .marca span {
+            color: var(--rojo);
+        }
+
+        .usuario {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 14px;
+        }
+
+        .usuario small {
+            display: block;
+            margin-top: 3px;
+            color: var(--gris);
+        }
+
+        .usuario form {
+            margin: 0;
+        }
+
+        .boton-secundario {
+            background: white;
+            color: var(--texto);
+            border: 1px solid var(--borde);
+        }
+
+        .boton-secundario:hover {
+            background: #f1f2f6;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: auto;
+            padding: 32px 24px 60px;
+        }
+
+        .portada {
+            padding: 40px;
+            border-radius: 22px;
+            background: #242332;
+            color: white;
+            margin-bottom: 26px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portada::after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: var(--rojo);
+            right: -85px;
+            top: -100px;
+            opacity: .6;
+        }
+
+        .etiqueta {
+            color: #ffadbb;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            letter-spacing: -1px;
+            margin: 14px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portada p {
+            color: #d4d4df;
+            line-height: 1.6;
+            margin: 0;
+            max-width: 540px;
+        }
+
+        .filtros {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto auto;
+            align-items: end;
+            gap: 14px;
+            background: white;
+            padding: 22px;
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            min-height: 46px;
+            border: 1px solid #d9dde7;
+            border-radius: 10px;
+            padding: 11px 13px;
+            background: white;
+            color: var(--texto);
+        }
+
+        .limpiar {
+            padding: 13px 8px;
+            color: var(--gris);
+            text-align: center;
+        }
+
+        .limpiar:hover {
+            color: var(--rojo);
+        }
+
+        .titulo-seccion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin: 32px 0 18px;
+        }
+
+        .titulo-seccion h2 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: -.5px;
+        }
+
+        .contador {
+            font-size: 13px;
+            color: var(--gris);
+        }
+
+        .catalogo {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .producto {
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .producto:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(32, 37, 54, .08);
+        }
+
+        .producto-cabecera {
+            min-height: 110px;
+            padding: 20px;
+            background: #fff1f3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .inicial {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--rojo);
+        }
+
+        .estado {
+            border-radius: 30px;
+            padding: 7px 11px;
+            background: #e3f5eb;
+            color: #226746;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .estado-agotado {
+            background: #eceef2;
+            color: #616978;
+        }
+
+        .producto-contenido {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .categoria {
+            margin: 0 0 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--rojo);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .producto h3 {
+            margin: 0 0 20px;
+            font-size: 20px;
+            overflow-wrap: anywhere;
+        }
+
+        .producto-detalles {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .precio {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -.7px;
+        }
+
+        .stock {
+            color: var(--gris);
+            font-size: 12px;
+        }
+
+        .producto button {
+            width: 100%;
+            margin-top: 18px;
+        }
+
+        .vacio {
+            grid-column: 1 / -1;
+            padding: 50px 24px;
+            text-align: center;
+            border: 1px dashed #ccd1dc;
+            border-radius: 16px;
+            background: white;
+        }
+
+        .vacio p {
+            color: var(--gris);
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--gris);
+            border-top: 1px solid var(--borde);
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .catalogo {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .filtros {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            main {
+                padding: 20px 16px 40px;
+            }
+
+            .barra-contenido {
+                padding: 18px 16px;
+            }
+
+            .portada {
+                padding: 28px 24px;
+            }
+
+            .filtros, .catalogo {
+                grid-template-columns: 1fr;
+            }
+
+            .titulo-seccion {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <nav>
-        {% if user.is_authenticated %}
-            <p>Usuario: {{ user.username }}</p>
-            <p>
-                Rol:
-                {% if user.is_staff %}
-                    Encargado
+    <header class="barra">
+        <nav class="barra-contenido" aria-label="Navegación principal">
+            <a class="marca" href="/">
+                CAFETERÍA <span>INACAP</span>
+            </a>
+
+            <div class="usuario">
+                {% if user.is_authenticated %}
+                    <div>
+                        <strong>{{ user.username }}</strong>
+                        <small>
+                            {% if user.is_staff %}
+                                Encargado
+                            {% else %}
+                                Cliente
+                            {% endif %}
+                        </small>
+                    </div>
+
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="boton-secundario" type="submit">
+                            Cerrar sesión
+                        </button>
+                    </form>
                 {% else %}
-                    Cliente
+                    <a class="boton" href="{% url 'login' %}">
+                        Iniciar sesión
+                    </a>
                 {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="portada" aria-labelledby="titulo">
+            <span class="etiqueta">Tu pausa del día</span>
+            <h1 id="titulo">Algo rico entre clases.</h1>
+            <p>
+                Explora nuestros productos y encuentra
+                tu próximo favorito para acompañar el día.
             </p>
-            <a href="{% url 'logout' %}">Cerrar sesión</a>
-        {% else %}
-            <a href="{% url 'login' %}">Iniciar sesión</a>
-        {% endif %}
-    </nav>
-    <div>
-        {% block content %}
-        {% endblock %}
-    </div>
+        </section>
+
+        <form class="filtros" method="get" role="search">
+            <div>
+                <label for="busqueda">¿Qué se te antoja?</label>
+                <input
+                    type="search"
+                    id="busqueda"
+                    name="q"
+                    value="{{ busqueda }}"
+                    placeholder="Buscar por nombre..."
+                >
+            </div>
+
+            <div>
+                <label for="categoria">Categoría</label>
+                <select id="categoria" name="categoria">
+                    <option value="">Todas las categorías</option>
+
+                    {% for categoria in categorias %}
+                        <option
+                            value="{{ categoria.pk }}"
+                            {% if categoria_seleccionada == categoria.pk|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ categoria.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Buscar</button>
+            <a class="limpiar" href="?">Limpiar filtros</a>
+        </form>
+
+        <div class="titulo-seccion">
+            <h2>Nuestro catálogo</h2>
+            <span class="contador">
+                {{ productos|length }} producto{{ productos|length|pluralize:"s" }}
+            </span>
+        </div>
+
+        <section class="catalogo" aria-label="Productos">
+            {% for producto in productos %}
+                <article class="producto">
+                    <div class="producto-cabecera">
+                        <span class="inicial" aria-hidden="true">
+                            {{ producto.nombre|first|upper }}
+                        </span>
+
+                        {% if producto.stock > 0 %}
+                            <span class="estado">Disponible</span>
+                        {% else %}
+                            <span class="estado estado-agotado">
+                                Agotado
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="producto-contenido">
+                        <p class="categoria">
+                            {{ producto.categoria.nombre }}
+                        </p>
+
+                        <h3>{{ producto.nombre }}</h3>
+
+                        <div class="producto-detalles">
+                            <span class="precio">
+                                {{ producto.precio_clp }}
+                            </span>
+
+                            {% if producto.stock > 0 %}
+                                <span class="stock">
+                                    Stock: {{ producto.stock }}
+                                </span>
+                            {% else %}
+                                <span class="stock">Sin existencias</span>
+                            {% endif %}
+                        </div>
+
+                        {% if producto.stock <= 0 %}
+                            <button type="button" disabled>
+                                Agregar al carrito
+                            </button>
+                        {% endif %}
+
+                        <!-- Agregar aquí el formulario del carrito
+                             cuando esté implementada su ruta. -->
+                    </div>
+                </article>
+            {% empty %}
+                <div class="vacio">
+                    <h3>No encontramos productos</h3>
+                    <p>
+                        Prueba con otro nombre o cambia
+                        la categoría seleccionada.
+                    </p>
+                    <a class="boton" href="?">Ver todo el catálogo</a>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        Cafetería INACAP · Una pausa para seguir.
+    </footer>
 </body>
 </html>

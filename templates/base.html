@@ -1,0 +1,9 @@
+<!-- ...existing code... -->
+<nav>
+    <ul>
+        <li>Usuario: {{ request.user.username }}</li>
+        <li>Rol: {{ 'Encargado' if request.user.is_staff else 'Cliente' }}</li>
+        <!-- ...existing menu items... -->
+    </ul>
+</nav>
+<!-- ...existing code... -->
