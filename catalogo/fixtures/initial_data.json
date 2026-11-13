@@ -1,0 +1,188 @@
+[
+    {
+        "model": "catalogo.categoria",
+        "pk": 1,
+        "fields": {
+            "nombre": "Bebidas",
+            "descripcion": "Bebidas frías y calientes",
+            "activa": true
+        }
+    },
+    {
+        "model": "catalogo.categoria",
+        "pk": 2,
+        "fields": {
+            "nombre": "Snacks",
+            "descripcion": "Snacks dulces y salados",
+            "activa": true
+        }
+    },
+    {
+        "model": "catalogo.categoria",
+        "pk": 3,
+        "fields": {
+            "nombre": "Comidas Rápidas",
+            "descripcion": "Hamburguesas, hot dogs y más",
+            "activa": true
+        }
+    },
+    {
+        "model": "catalogo.categoria",
+        "pk": 4,
+        "fields": {
+            "nombre": "Postres",
+            "descripcion": "Postres variados",
+            "activa": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 1,
+        "fields": {
+            "categoria": 1,
+            "codigo": "B001",
+            "nombre": "Coca Cola",
+            "precio": 1000,
+            "stock": 50,
+            "disponible": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 2,
+        "fields": {
+            "categoria": 1,
+            "codigo": "B002",
+            "nombre": "Café",
+            "precio": 800,
+            "stock": 30,
+            "disponible": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 3,
+        "fields": {
+            "categoria": 1,
+            "codigo": "B003",
+            "nombre": "Té",
+            "precio": 700,
+            "stock": 0,
+            "disponible": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 4,
+        "fields": {
+            "categoria": 2,
+            "codigo": "S001",
+            "nombre": "Papas Fritas",
+            "precio": 1200,
+            "stock": 20,
+            "disponible": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 5,
+        "fields": {
+            "categoria": 2,
+            "codigo": "S002",
+            "nombre": "Galletas",
+            "precio": 500,
+            "stock": 0,
+            "disponible": false
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 6,
+        "fields": {
+            "categoria": 3,
+            "codigo": "C001",
+            "nombre": "Hamburguesa",
+            "precio": 2500,
+            "stock": 15,
+            "disponible": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 7,
+        "fields": {
+            "categoria": 3,
+            "codigo": "C002",
+            "nombre": "Hot Dog",
+            "precio": 2000,
+            "stock": 10,
+            "disponible": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 8,
+        "fields": {
+            "categoria": 3,
+            "codigo": "C003",
+            "nombre": "Pizza",
+            "precio": 3000,
+            "stock": 0,
+            "disponible": false
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 9,
+        "fields": {
+            "categoria": 4,
+            "codigo": "P001",
+            "nombre": "Helado",
+            "precio": 1500,
+            "stock": 25,
+            "disponible": true
+        }
+    },
+    {
+        "model": "catalogo.producto",
+        "pk": 10,
+        "fields": {
+            "categoria": 4,
+            "codigo": "P002",
+            "nombre": "Pastel",
+            "precio": 2000,
+            "stock": 5,
+            "disponible": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "manager",
+            "first_name": "Encargado",
+            "email": "manager@example.com",
+            "is_staff": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "cliente1",
+            "first_name": "Cliente Uno",
+            "email": "cliente1@example.com",
+            "is_staff": false
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "cliente2",
+            "first_name": "Cliente Dos",
+            "email": "cliente2@example.com",
+            "is_staff": false
+        }
+    }
+]
